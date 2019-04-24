@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
-  let Restaurants = sequelize.define("Restaurants", {
+  let Restaurant = sequelize.define("Restaurant", {
     name: DataTypes.STRING,
     password: DataTypes.STRING
   });
 
-  return Restaurants;
+  return Restaurant;
 };

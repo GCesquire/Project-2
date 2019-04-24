@@ -3,10 +3,20 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     wholesalePrice: DataTypes.FLOAT,
     retailPrice: DataTypes.FLOAT,
-    stockQty: DataTypes.INT,
+    stockQty: DataTypes.INTEGER,
     allergies: DataTypes.STRING,
-    modifications: DataTypes.BOOLEAN,
-    category: DataTypes.STRING
+    modifications: DataTypes.BOOLEAN
   });
+
+  FoodMenu.associate = models => {
+    // Food item from FoodMenu should belong to a certain Category
+    // A food item can't be created without a Category due to the foreign key constraint
+    FoodMenu.belongsTo(models.Category, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
+
   return FoodMenu;
 };
