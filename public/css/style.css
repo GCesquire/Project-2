@@ -1,0 +1,51 @@
+body {
+    text-align: center;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+
+.allergies {
+    margin: auto;
+}
+
+.food-menu {
+    width: 100vw;
+    overflow: hidden;
+}
+
+.table-list {
+    height: 70vh;
+    overflow: hidden;
+    background: #ece8e8;
+}
+
+.menu-list {
+    height: 70vh;
+    overflow: hidden;
+    background: #cbf43b;
+}
+
+.right-price {
+    position: absolute;
+    right: 0;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+.center {
+    text-align: center;
+}
+
+.top-margin {
+    margin-top: 10px;
+}

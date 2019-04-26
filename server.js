@@ -15,6 +15,7 @@ app.set("view engine", "handlebars");
 
 app.use("/", htmlRoutes);
 app.use("/api", apiRoutes);
+app.use(express.static("public"));
 
 db.sequelize.sync({ force: true });
 
