@@ -16,3 +16,78 @@ module.exports = (sequelize, DataTypes) => {
 
   return Category;
 };
+
+$(document).ready(function() {
+  // Reference to input field for new category
+  var $newItemInput = $('input.new-item');
+  // New categories go inside categories-container
+  var $categoryContainer = $('.category-container');
+  // Event listeners for adding, editing, and deleting categories
+  $(document).on('submit' , '#category-form', insertCategory);
+  $(document).on('click' , '.category-item', editCategory);
+  $(document).on("keyup", ".category-item", finishEdit);
+  $(document).on("blur", ".category-item", cancelEdit);
+  $(document).on('click' , 'category-button.delete' , deleteCategory);
+
+  // Initial category array
+  var categories = [];
+
+  // Get all existing categories from the database
+  getCategories();
+
+  // Refreshes categories displayed
+  function initializeRows() {
+    $categoryContainer.empty();
+    var rowsToAdd = [];
+    for (var i = 0; i < categories; i++) {
+      rowsToAdd.push(createNewRow(categories[i]));
+    }
+    $categoryContainer.prepend(rowsToAdd);
+  }
+
+  // grabs categories from the database and updates the view
+  function getCategories () {
+    $.ajax({
+      method: 'GET',
+      url: '/categories'
+    }).then(function(res) {
+      categories = res;
+      initializeRows();
+    });
+  }
+
+  function editCategory() {
+    var currentCategory = $(this).data('category');
+    $(this).children().hide();
+    $(this).children("input.edit").val(currentCategory.name);
+    $(this).children("input.edit").show();
+    $(this).children("input.edit").focus();
+  }
+
+  function finishEdit(event) {
+    var updatedCategory = $(this).data('category');
+    if (event.which === 13) {
+      updatedCategory.name = $(this).children("input").val().trim();
+      $(this).blur();
+      updateCategory(updatedCategory);
+    }
+  } 
+  
+  function updateCategory(category) {
+    $.ajax({
+      method: 'PUT',
+      url: '/categories',
+      data: category
+    }).then(getCategories);
+  }
+
+  function cancelEdit() {
+    var currentCategory = $(this).data("todo");
+    if (currentCategory) {
+      $(this).children().hide();
+      $(this).children("input.edit").val(currentCategory.name);
+      $(this).children("span").show();
+      $(this).children("button").show();
+    }
+  }
+});

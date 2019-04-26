@@ -59,6 +59,25 @@ router.post("/categories", (req, res) => {
   });
 });
 
+//update category
+router.put('/categories', (req, res) => {
+  db.Category.update(
+    {name: req.body.name} ,
+    {where: {id: req.body.categoryId}}
+  ).then(results => {
+    res.json(results);
+  });
+});
+
+//delete a category
+router.delete('/categories', (req, res) => {
+  db.Category.destroy({
+    //Input sequelize query here
+  }).then(results => {
+    res.json(results);
+  });
+});
+
 //get all the food items
 router.get("/food", (req, res) => {
   db.FoodMenu.findAll({
