@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     retailPrice: DataTypes.FLOAT,
     stockQty: DataTypes.INTEGER,
     allergies: DataTypes.STRING,
-    modifications: DataTypes.BOOLEAN
+    modifications: DataTypes.STRING
   });
 
   FoodMenu.associate = models => {

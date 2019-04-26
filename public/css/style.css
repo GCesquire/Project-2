@@ -1,0 +1,13 @@
+body {
+    text-align: center;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+
+.allergies {
+    margin: auto;
+}
