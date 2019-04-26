@@ -1,7 +1,5 @@
 console.log("inside add food");
 $("#add").on("click", event => {
-  event.preventDefault();
-
   let allergiesArr = []; //to store all the possible allergies on each food item
   let allowModification = []; //too store true/false if modification is possible
 

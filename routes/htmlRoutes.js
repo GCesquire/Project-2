@@ -17,4 +17,10 @@ router.get("/food", (req, res) => {
   });
 });
 
+router.get("/food-menu", (req, res) => {
+  db.FoodMenu.findAll({}).then(results => {
+    res.render("display-food", { foodMenu: results });
+  });
+});
+
 module.exports = router;
