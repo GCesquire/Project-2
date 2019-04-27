@@ -12,14 +12,22 @@ router.get("/", (req, res) => {
 });
 
 router.get("/food", (req, res) => {
-  db.FoodMenu.findAll({}).then(results => {
-    res.render("food", {});
-  });
+  res.render("food", {});
 });
 
 router.get("/food-menu", (req, res) => {
   db.FoodMenu.findAll({}).then(results => {
     res.render("display-food", { foodMenu: results });
+  });
+});
+
+router.get("/add-tables", (req, res) => {
+  res.render("tables", {});
+});
+
+router.get("/tables", (req, res) => {
+  db.Table.findAll({}).then(results => {
+    res.render("display-tables", { tables: results });
   });
 });
 

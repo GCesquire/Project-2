@@ -49,3 +49,21 @@ body {
 .top-margin {
     margin-top: 10px;
 }
+
+.tables {
+    background: url("../images/square-table.png");
+    background-size: cover;
+    width: 90px;
+    height: 90px;
+    margin: auto;
+    padding-top: 33px;
+    text-decoration: none;
+    color: #000;
+}
+
+.tables:hover {
+    background: url("../images/square-table-hover.png");
+    background-size: cover;
+    text-decoration: none;
+    color: #fff;
+}

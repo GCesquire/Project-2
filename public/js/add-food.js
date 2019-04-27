@@ -1,5 +1,4 @@
-console.log("inside add food");
-$("#add").on("click", event => {
+let addNewFoodItem = () => {
   let allergiesArr = []; //to store all the possible allergies on each food item
   let allowModification = []; //too store true/false if modification is possible
 
@@ -33,4 +32,7 @@ $("#add").on("click", event => {
   $.post("/api/food", newFood).then(response => {
     console.log("successfully");
   });
-});
+};
+
+$("#submit").on("click", addNewFoodItem);
+$("#add").on("click", addNewFoodItem);
