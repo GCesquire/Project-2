@@ -82,7 +82,7 @@ $(document).ready(function() {
   }
 
   function cancelEdit() {
-    var currentCategory = $(this).data("todo");
+    var currentCategory = $(this).data("category");
     if (currentCategory) {
       $(this).children().hide();
       $(this).children("input.edit").val(currentCategory.name);
@@ -92,12 +92,12 @@ $(document).ready(function() {
   }
 
     // This function makes a category row
-    function createNewRow(todo) {
+    function createNewRow(category) {
       var $newInputRow = $(
         [
-          "<li class='list-group-item todo-item'>",
+          "<li class='list-group-item category-item'>",
           "<span>",
-          todo.text,
+          category.name,
           "</span>",
           "<input type='text' class='edit' style='display: none;'>",
           "<button class='delete btn btn-danger'>x</button>",
@@ -106,9 +106,9 @@ $(document).ready(function() {
         ].join("")
       );
   
-      $newInputRow.find("button.delete").data("id", todo.id);
+      $newInputRow.find("button.delete").data("id", category.id);
       $newInputRow.find("input.edit").css("display", "none");
-      $newInputRow.data("todo", todo);
+      $newInputRow.data("category", category);
     }
 
     // Inserts a category into the database and updates the view
