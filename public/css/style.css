@@ -67,3 +67,27 @@ body {
     text-decoration: none;
     color: #fff;
 }
+
+.cursor {
+    cursor: pointer;
+}
+
+.middle-screen {
+    margin-top: 150px;
+}
+
+.big-btns {
+    font-size: 28px;
+    padding: 20px 0 20px 0;
+    width: 200px;
+}
+
+.bottom-fixed {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+#guest-note {
+    width: 100%;
+}

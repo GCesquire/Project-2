@@ -31,4 +31,12 @@ router.get("/tables", (req, res) => {
   });
 });
 
+router.get("/system", (req, res) => {
+  res.render("system", {});
+});
+
+router.get("/report", (req, res) => {
+  res.render("report", {});
+});
+
 module.exports = router;
