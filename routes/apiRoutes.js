@@ -63,7 +63,7 @@ router.post("/categories", (req, res) => {
 router.put('/categories', (req, res) => {
   db.Category.update(
     {name: req.body.name} ,
-    {where: {id: req.body.categoryId}}
+    {where: {id: req.body.id}}
   ).then(results => {
     res.json(results);
   });
@@ -72,7 +72,9 @@ router.put('/categories', (req, res) => {
 //delete a category
 router.delete('/categories', (req, res) => {
   db.Category.destroy({
-    //Input sequelize query here
+    where: {
+      id: req.body.id
+    }
   }).then(results => {
     res.json(results);
   });

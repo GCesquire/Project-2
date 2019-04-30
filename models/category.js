@@ -19,15 +19,15 @@ module.exports = (sequelize, DataTypes) => {
 
 $(document).ready(function() {
   // Reference to input field for new category
-  var $newItemInput = $('input.new-item');
+  var $newItemInput = $("input.new-item");
   // New categories go inside categories-container
-  var $categoryContainer = $('.category-container');
+  var $categoryContainer = $(".category-container");
   // Event listeners for adding, editing, and deleting categories
-  $(document).on('submit' , '#category-form', insertCategory);
-  $(document).on('click' , '.category-item', editCategory);
+  $(document).on("submit", "#category-form", insertCategory);
+  $(document).on("click", ".category-item", editCategory);
   $(document).on("keyup", ".category-item", finishEdit);
   $(document).on("blur", ".category-item", cancelEdit);
-  $(document).on('click' , 'button.delete' , deleteCategory);
+  $(document).on("click", "button.delete", deleteCategory);
 
   // Initial category array
   var categories = [];
@@ -46,82 +46,113 @@ $(document).ready(function() {
   }
 
   // grabs categories from the database and updates the view
-  function getCategories () {
+  function getCategories() {
     $.ajax({
-      method: 'GET',
-      url: '/categories'
+      method: "GET",
+      url: "/categories"
     }).then(function(res) {
       categories = res;
-      initializeRows();
+      initializeRows();1
     });
   }
 
+  // Inserts a category into the database and updates the view
+  function insertCategory(event) {
+    event.preventDefault();
+    var category = {
+      name: $newItemInput.val().trim()
+    };
+    $.ajax({
+      method: "POST",
+      url: "/categories",
+      data: category
+    }).then(getCategories);
+    $newItemInput.val("");
+  }
+
+  // updateCategory, editCategory, finishEdit, and cancelEdit deal with changing the category
+  function updateCategory(category) {
+    $.ajax({
+      method: "PUT",
+      url: "/categories",
+      data: category
+    }).then(getCategories);
+  }
+
   function editCategory() {
-    var currentCategory = $(this).data('category');
-    $(this).children().hide();
-    $(this).children("input.edit").val(currentCategory.name);
-    $(this).children("input.edit").show();
-    $(this).children("input.edit").focus();
+    var currentCategory = $(this).data("category");
+    $(this)
+      .children()
+      .hide();
+    $(this)
+      .children("input.edit")
+      .val(currentCategory.name);
+    $(this)
+      .children("input.edit")
+      .show();
+    $(this)
+      .children("input.edit")
+      .focus();
   }
 
   function finishEdit(event) {
-    var updatedCategory = $(this).data('category');
+    var updatedCategory = $(this).data("category");
     if (event.which === 13) {
-      updatedCategory.name = $(this).children("input").val().trim();
+      updatedCategory.name = $(this)
+        .children("input")
+        .val()
+        .trim();
       $(this).blur();
       updateCategory(updatedCategory);
     }
-  } 
-  
-  function updateCategory(category) {
-    $.ajax({
-      method: 'PUT',
-      url: '/categories',
-      data: category
-    }).then(getCategories);
   }
 
   function cancelEdit() {
     var currentCategory = $(this).data("category");
     if (currentCategory) {
-      $(this).children().hide();
-      $(this).children("input.edit").val(currentCategory.name);
-      $(this).children("span").show();
-      $(this).children("button").show();
+      $(this)
+        .children()
+        .hide();
+      $(this)
+        .children("input.edit")
+        .val(currentCategory.name);
+      $(this)
+        .children("span")
+        .show();
+      $(this)
+        .children("button")
+        .show();
     }
   }
 
-    // This function makes a category row
-    function createNewRow(category) {
-      var $newInputRow = $(
-        [
-          "<li class='list-group-item category-item'>",
-          "<span>",
-          category.name,
-          "</span>",
-          "<input type='text' class='edit' style='display: none;'>",
-          "<button class='delete btn btn-danger'>x</button>",
-          "<button class='complete btn btn-primary'>✓</button>",
-          "</li>"
-        ].join("")
-      );
-  
-      $newInputRow.find("button.delete").data("id", category.id);
-      $newInputRow.find("input.edit").css("display", "none");
-      $newInputRow.data("category", category);
-    }
+  //deleteCategory removes the category from the db and the DOM
+  function deleteCategory(event) {
+    event.stopPropagation();
+    var id = $(this).data('id');
+    $.ajax({
+      method: "DELETE",
+      url: '/categories',
+      data: id
+    }).then(getCategories);
+  }
 
-    // Inserts a category into the database and updates the view
-    function insertCategory(event) {
-      event.preventDefault();
-      var category = {
-        name: $newItemInput.val().trim(),
-      };
-      $.ajax({
-        method: 'POST',
-        url: '/categories',
-        data: category
-      }).then(getCategories);
-      $newItemInput.val("");
-    }
+  // This function makes a category row
+  function createNewRow(category) {
+    var $newInputRow = $(
+      [
+        "<li class='list-group-item category-item'>",
+        "<span>",
+        category.name,
+        "</span>",
+        "<input type='text' class='edit' style='display: none;'>",
+        "<button class='delete btn btn-danger'>x</button>",
+        "<button class='complete btn btn-primary'>✓</button>",
+        "</li>"
+      ].join("")
+    );
+
+    $newInputRow.find("button.delete").data("id", category.id);
+    $newInputRow.find("input.edit").css("display", "none");
+    $newInputRow.data("category", category);
+  }
 });
