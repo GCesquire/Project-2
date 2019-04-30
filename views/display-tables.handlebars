@@ -5,7 +5,7 @@
 
     <a href="/food-menu" class="tables" data-toggle="modal" data-target="#table">
         <div>
-            <p value="{{guestQty}}">{{tableNumber}}</p>
+            <p value="{{tableNumber}}" class="table">{{tableNumber}}</p>
         </div>
     </a>
 
@@ -73,9 +73,16 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <a href="/categories"><button type="button" class="btn btn-info">Enter</button></a>
+                <a href="/categories"><button type="button" class="btn btn-info" id="openTable">Enter</button></a>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
+
+<!--jQuery-->
+<script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
+    crossorigin="anonymous"></script>
+
+<!-- JavaScript-->
+<script src="./js/order.js"></script>
