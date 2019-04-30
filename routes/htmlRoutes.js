@@ -21,6 +21,16 @@ router.get("/food-menu", (req, res) => {
   });
 });
 
+router.get("/drinks", (req, res) => {
+  res.render("drinks", {});
+});
+
+router.get("/drink-menu", (req, res) => {
+  db.DrinkMenu.findAll({}).then(results => {
+    res.render("display-drink", { drinkMenu: results });
+  });
+});
+
 router.get("/add-tables", (req, res) => {
   res.render("tables", {});
 });
