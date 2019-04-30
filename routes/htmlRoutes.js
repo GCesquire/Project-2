@@ -32,13 +32,25 @@ router.get("/drink-menu", (req, res) => {
 });
 
 router.get("/add-tables", (req, res) => {
-  res.render("tables", {});
+    res.render("tables", {});
 });
 
 router.get("/tables", (req, res) => {
   db.Table.findAll({}).then(results => {
     res.render("display-tables", { tables: results });
   });
+});
+
+router.get("/system", (req, res) => {
+  res.render("system", {});
+});
+
+router.get("/report", (req, res) => {
+  res.render("report", {});
+});
+
+router.get("/categories", (req, res) => {
+  res.render("categories", {});
 });
 
 module.exports = router;
