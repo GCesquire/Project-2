@@ -21,6 +21,16 @@ router.get("/food-menu", (req, res) => {
   });
 });
 
+router.get("/drinks", (req, res) => {
+  res.render("drinks", {});
+});
+
+router.get("/drink-menu", (req, res) => {
+  db.DrinkMenu.findAll({}).then(results => {
+    res.render("display-drink", { drinkMenu: results });
+  });
+});
+
 router.get("/add-tables", (req, res) => {
   res.render("tables", {});
 });
@@ -37,6 +47,10 @@ router.get("/system", (req, res) => {
 
 router.get("/report", (req, res) => {
   res.render("report", {});
+});
+
+router.get("/categories", (req, res) => {
+  res.render("categories", {});
 });
 
 module.exports = router;

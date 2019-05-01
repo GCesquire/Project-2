@@ -20,6 +20,8 @@ router.get("/restaurants", (req, res) => {
 router.post("/restaurants", (req, res) => {
   db.Restaurant.create({
     name: req.body.name,
+    address: req.body.address,
+    email: req.body.email,
     password: req.body.password
   }).then(results => {
     res.json(results);
@@ -114,6 +116,24 @@ router.post("/tables", (req, res) => {
   db.Table.create({
     tableNumber: parseInt(req.body.tableNumber),
     guestQty: req.body.guestQty
+  }).then(results => {
+    res.json(results);
+  });
+});
+
+//display all orders
+router.get("/orders", (req, res) => {
+  db.Order.findAll().then(results => {
+    res.json(results);
+  });
+});
+
+//add a new Category
+router.post("/orders", (req, res) => {
+  db.Order.create({
+    item: req.body.item,
+    itemQty: req.body.itemQty,
+    price: req.body.price
   }).then(results => {
     res.json(results);
   });
