@@ -1,0 +1,125 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    background-image: url("../images/SpasmRestaurant.jpg");
+    background-attachment: fixed;
+    background-size:  cover;
+    font-family: 'Times New Roman';     
+}
+
+h1{
+    font-size: 50px;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+
+.col-md-5{
+    background: rgba(0,0,0,0.5);
+    margin-top: 40px;
+}
+
+.label{
+    font-size: 20px;
+    font-weight: normal;
+    color: aliceblue
+}
+
+.input-group{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.input-group-addon{
+    background: transparent;
+    border-radius: 0px;
+    border: 0px;
+    border-bottom: 1px solid whitesmoke;
+    font-size: 18px;
+    color: white;
+}
+.form-control{
+    background: transparent;
+    border-radius: 0px;
+    border: 0px;
+    border-bottom: 1px solid white;
+    padding: 15px;
+    color: white;
+    font-size: 21px;
+    
+    
+}
+input[type="checkbox"]{
+    height: 15px;
+    width: 15px;
+}
+small{
+    font-size: 18px;
+    color: white;
+}
+
+p{
+    font-size: 18px;
+    color: white;
+}
+.btn-default{
+    border-radius: 0px;
+    width: 445px;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px; 
+    background: rgb(241, 236, 225);
+    font-synthesis: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -o-font-smoothing: antialiased;
+    -ms-font-smoothing: antialiased;
+    text-decoration: none;
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.50);
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.50);
+    border-top: 1px solid rgba(0,0,0,0.001);
+    box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
+    -o-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
+    -ms-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
+    cursor: pointer;
+}
+
+.btn-default:hover {
+    /* Hover State */
+    box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.25);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.25);
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.25);
+    -o-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.25);
+    -ms-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.25);
+    -webkit-animation: glow 1s infinite ease-in-out;
+    cursor: pointer;
+}
+
+.btn-default:active {
+    /* Active State (clicked on) */
+    padding: 6px 15px 5px 15px;
+    border-top: 1px solid rgba(0,0,0,0.55);
+    box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 2px 1px rgba(255,255,255,0.50), inset 0px 1px 4px rgba(0,0,0,0.35), inset 0px -14px 14px rgba(255,255,255,0.10);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 2px 1px rgba(255,255,255,0.50), inset 0px 1px 4px rgba(0,0,0,0.35), inset 0px -14px 14px rgba(255,255,255,0.10);
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 2px 1px rgba(255,255,255,0.50), inset 0px 1px 4px rgba(0,0,0,0.35), inset 0px -14px 14px rgba(255,255,255,0.10);
+    -o-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 2px 1px rgba(255,255,255,0.50), inset 0px 1px 4px rgba(0,0,0,0.35), inset 0px -14px 14px rgba(255,255,255,0.10);
+    -ms-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 2px 1px rgba(255,255,255,0.50), inset 0px 1px 4px rgba(0,0,0,0.35), inset 0px -14px 14px rgba(255,255,255,0.10);
+    -webkit-animation: none;
+    cursor: pointer !important;
+ 
+}
+h2{
+    font-size: 30px;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 60px;
+}

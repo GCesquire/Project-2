@@ -8,7 +8,7 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.get("/", (req, res) => {
-  res.render("index", {});
+  // res.render("index", {});
 });
 
 router.get("/food", (req, res) => {

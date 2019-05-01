@@ -20,7 +20,9 @@ router.get("/restaurants", (req, res) => {
 router.post("/restaurants", (req, res) => {
   db.Restaurant.create({
     name: req.body.name,
-    password: req.body.password
+    address: req.body.address,
+    email: req.body.email,
+    password: req.body.password,
   }).then(results => {
     res.json(results);
   });

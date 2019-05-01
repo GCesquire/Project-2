@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="http://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400,300,600" rel="stylesheet" type="text/css"/>
+<!--Bootstrap link-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+<link href="../public/css/login-style.css" rel="stylesheet" type="text/css"/>
+<title>Restaurant Server App</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <h1 class="text-center">Restaurant's Name</h1>
+                <label class="label control-label">User name</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                    <input type="text" id="restaurantName" class="form-control" name="mail" palceholder="E-mail">
+                </div>
+               
+                <label class="label control-label">Password</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                    <input type="password" id="restaurantPassw" class="form-control" name="Password" palceholder="Password">
+                </div>
+                <!-- make a row for 2 col-md-6 -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="checkbox"> <small>Remember me</small>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="#"><p class="text-right">Forgot Password</p></a>
+                    </div>
+                </div>
+                <!-- close-->
+                <a href="/"  id="login"><div class="btn btn-default">LOGIN</div></a>
+                <p class="text-center">Dont have a login yet? <a href="#"> Sign Up</a></p>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <h2 class="text-center">Sign Up</h2>
+                <label class="label control-label">Name of the restaurant</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                    <input type="text" id="newName" class="form-control" name="Name" placeholder="Name">
+                </div>
+                                
+                <label class="label control-label">E-mail</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                    <input type="email" class="form-control" id="email" name="mail" placeholder="E-mail">
+                </div>
+                
+                <label class="label control-label">Address</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                    <input type="Text" class="form-control" id="address" name="Address" palceholder="Address">
+                </div>
+                <label class="label control-label">Password</label>
+                <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                        <input type="password" id="password" class="form-control" name="Password" placeholder="Password">
+                </div>
+                <label class="label control-label">Re-type Password</label>
+                <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                        <input type="password" class="form-control" name="Re-type Password" placeholder="Re-type Password">
+                </div> 
+                <a href="#"><div class="btn btn-default" id="sign-up">SIGN UP</div></a>                        
+             </div>
+         </div>
+</div>
+         
+<!--jQuery-->
+<script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
+crossorigin="anonymous"></script>
+
+<!--JavaScript-->
+<script src="./js/restaurant.js"></script>
+     </body>
+     </html>
