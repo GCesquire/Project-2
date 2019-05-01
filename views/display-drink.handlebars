@@ -1,5 +1,5 @@
 <div class="container food-menu">
-    <h1>Food Menu</h1>
+    <h1>Drink Menu</h1>
     <div class="row">
         <div class="col-lg-6 table-list">
             <p>Table # {{number}}</p>
@@ -8,9 +8,9 @@
 
         <div class="col-lg-6 menu-list">
 
-            {{#each foodMenu }}
+            {{#each drinkMenu }}
 
-            <button class="btn btn-info food-item" value="{{name}}"> {{name}} </button>
+            <button class="btn btn-info drink-item" value="{{name}}"> {{name}} </button>
 
             {{/each}}
         </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="col-lg-4">
             <div class="top-margin right">
-                <button class="btn btn-info" id="pay">Send order</button>
+                <button class="btn btn-info" id="send">Send Order</button>
             </div>
             <div class="top-margin right">
                 <button class="btn btn-info" id="pay">Pay</button>
@@ -42,4 +42,5 @@
     crossorigin="anonymous"></script>
 
 <!--JavaScript-->
-<script src="./js/display-food.js"></script>
+<script src="./js/display-drink.js"></script>
+<script src="./js/order.js"></script>
