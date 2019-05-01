@@ -1,6 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
   let Restaurant = sequelize.define("Restaurant", {
     name: DataTypes.STRING,
+    address: DataTypes.STRING,
+    email: DataTypes.STRING,
     password: DataTypes.STRING
   });
   Restaurant.associate = models => {

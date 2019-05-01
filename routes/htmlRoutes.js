@@ -32,7 +32,7 @@ router.get("/drink-menu", (req, res) => {
 });
 
 router.get("/add-tables", (req, res) => {
-    res.render("tables", {});
+  res.render("tables", {});
 });
 
 router.get("/tables", (req, res) => {

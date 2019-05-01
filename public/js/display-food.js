@@ -21,8 +21,11 @@ $(".food-item").on("click", event => {
     res.forEach(element => {
       if (selected === element.name) {
         let dishParagraph = $("<p>").text(element.name);
+        dishParagraph.attr("class", "item");
+        dishParagraph.attr("value", element.name);
         let priceParagraph = $("<span>").text(`$${element.retailPrice}.00`);
         priceParagraph.attr("class", "right-price");
+        priceParagraph.attr("value", element.retailPrice);
         dishParagraph.append(priceParagraph);
         $("#result").append(dishParagraph);
         price += element.retailPrice;
