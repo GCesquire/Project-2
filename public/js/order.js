@@ -1,26 +1,20 @@
-// $(".tables").on("click", event => {
-//   let tableNumber = event.target.value;
-//   console.log("tableNumber ", tableNumber);
-//   $(".guestQty").on("click", event2 => {
-//     let guestQty = event2.target.value;
-//     console.log("Guest QTY ", guestQty);
-//   });
-//   $("#openTable").on("click", event => {
-//     console.log("In order");
-//   });
-// });
+// let addToOrder = () => {
+//   let length = $(".item").length;
+//   console.log("Length ", length);
 
-let addToOrder = () => {
-  let length = $(".item").lenght;
-  console.log("Length ", length);
-  for (let i = 0; i < length; i++) {
-    let newOrder = {
-      item: $(".item").value,
-      itemQty: 1,
-      price: $(".right-price").value
-    };
-    $.post("/api/orders", newOrder).then(res => {
-      console.log("Succes ", res);
-    });
-  }
-};
+//   for (let i = 0; i < length; i++) {
+//     console.log("name of item, ", i, " ", $(".item")[i]);
+//     let itemName = $(".item")[i];
+//     console.log(itemName.text());
+//     //   let newOrder = {
+//     //     item: $(".item")[i].val(),
+//     //     itemQty: 1,
+//     //     price: $(".right-price")[i].val()
+//     //   };
+//     //   $.post("/api/orders", newOrder).then(res => {
+//     //     console.log("Succes ", res);
+//     //   });
+//   }
+// };
+
+// $("#send").on("click", addToOrder);

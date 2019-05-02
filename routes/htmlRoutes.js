@@ -1,5 +1,6 @@
 const express = require("express");
 const db = require("../models/index");
+const path = require("path");
 let router = express.Router();
 
 router.use(function timeLog(req, res, next) {
@@ -8,7 +9,27 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.get("/", (req, res) => {
-  res.render("index", {});
+  res.sendFile(path.join(__dirname, "../public/restaurants.html"));
+});
+
+router.get("/categories", (req, res) => {
+  db.Category.findAll({}).then(results => {
+    res.render("display-categories", { categories: results });
+  });
+});
+
+router.get("/add-categories", (req, res) => {
+  res.render("categories", {});
+});
+
+router.get("/employees", (req, res) => {
+  db.Waiter.findAll({}).then(results => {
+    res.render("display-employees", { employees: results });
+  });
+});
+
+router.get("/add-employees", (req, res) => {
+  res.render("employees");
 });
 
 router.get("/food", (req, res) => {
@@ -32,7 +53,7 @@ router.get("/drink-menu", (req, res) => {
 });
 
 router.get("/add-tables", (req, res) => {
-    res.render("tables", {});
+  res.render("tables", {});
 });
 
 router.get("/tables", (req, res) => {
@@ -47,10 +68,6 @@ router.get("/system", (req, res) => {
 
 router.get("/report", (req, res) => {
   res.render("report", {});
-});
-
-router.get("/categories", (req, res) => {
-  res.render("categories", {});
 });
 
 module.exports = router;

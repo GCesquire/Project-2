@@ -6,6 +6,9 @@ let price = 0,
   taxAmount = 0,
   sum = 0,
   total = 0; //for calculations
+let dishParagraph = $("<p>");
+let priceParagraph = $("<span>");
+const tableId = 1;
 
 let clickConter = 0;
 $("#total").html(sum);
@@ -17,20 +20,50 @@ $(".food-item").on("click", event => {
   console.log("selected, ", selected);
   clickConter++;
   console.log("Clicked", clickConter);
+
   $.get("/api/food").then(res => {
     res.forEach(element => {
       if (selected === element.name) {
-        let dishParagraph = $("<p>").text(element.name);
-        dishParagraph.attr("class", "item");
-        dishParagraph.attr("value", element.name);
-        let priceParagraph = $("<span>").text(`$${element.retailPrice}.00`);
-        priceParagraph.attr("class", "right-price");
-        priceParagraph.attr("value", element.retailPrice);
+        // dishParagraph.text(element.name).attr("class", "item");
+        // priceParagraph
+        //   .text(`$${element.retailPrice}.00`)
+        //   .attr("class", "right-price");
+        // dishParagraph.append(priceParagraph);
+        // $("#result").append(dishParagraph);
+        // price += element.retailPrice;
+        newOrder = {
+          item: element.name,
+          itemQty: 1,
+          price: element.retailPrice
+        };
+        console.log("NEW ORDER", newOrder);
+        $.post("/api/orders", newOrder).then(respone => {
+          console.log("response successfully ", res);
+        });
+      }
+    });
+    // taxAmount = price * tax; //total tax
+    // total = price + taxAmount; //Final amount
+
+    // $("#total").html(price);
+    // $("#tax").html(taxAmount.toFixed(2));
+    // $("#totalAmount").html(total.toFixed(2));
+  });
+
+  $.get("api/orders").then(res => {
+    console.log("getting API");
+    res.forEach(element => {
+      // if (element.TableId === tableId) {
+      if (selected === element.item) {
+        dishParagraph.text(element.item).attr("class", "item");
+        priceParagraph
+          .text(`$${element.price}.00`)
+          .attr("class", "right-price");
         dishParagraph.append(priceParagraph);
         $("#result").append(dishParagraph);
-        price += element.retailPrice;
-        wholesale += element.wholesalePrice;
+        price += element.price;
       }
+      // }
     });
     taxAmount = price * tax; //total tax
     total = price + taxAmount; //Final amount

@@ -14,5 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  // Category.associate = models => {
+  //   Category.belongsTo(models.Restaurant, {
+  //     foreignKey: {
+  //       allowNull: false
+  //     }
+  //   });
+  // };
+
   return Category;
 };

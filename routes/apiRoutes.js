@@ -55,7 +55,8 @@ router.get("/categories", (req, res) => {
 //add a new Category
 router.post("/categories", (req, res) => {
   db.Category.create({
-    name: req.body.name
+    name: req.body.name,
+    password: req.body.password
   }).then(results => {
     res.json(results);
   });
@@ -111,6 +112,17 @@ router.get("/tables", (req, res) => {
   });
 });
 
+router.get("/tables/:id", function(req, res) {
+  db.Table.findOne({
+    where: {
+      id: req.params.id
+    },
+    include: [db.Table]
+  }).then(results => {
+    res.json(results);
+  });
+});
+
 //add a new table
 router.post("/tables", (req, res) => {
   db.Table.create({
@@ -123,17 +135,24 @@ router.post("/tables", (req, res) => {
 
 //display all orders
 router.get("/orders", (req, res) => {
-  db.Order.findAll().then(results => {
+  const query = {};
+  if (req.query.table_id) {
+    query.TableId = req.query.table_id;
+  }
+  db.Order.findAll({
+    where: query,
+    include: [db.Table]
+  }).then(results => {
     res.json(results);
   });
 });
 
-//add a new Category
+//add a new order
 router.post("/orders", (req, res) => {
   db.Order.create({
     item: req.body.item,
-    itemQty: req.body.itemQty,
-    price: req.body.price
+    itemQty: parseInt(req.body.itemQty),
+    price: parseFloat(req.body.price)
   }).then(results => {
     res.json(results);
   });

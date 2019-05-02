@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     Restaurant.hasMany(models.Waiter, {
       onDelete: "cascade"
     });
+    // Restaurant.hasMany(models.Category, {
+    //   onDelete: "cascade"
+    // });
   };
 
   return Restaurant;
