@@ -1,6 +1,27 @@
 const express = require("express");
 const db = require("../models/index");
+const session = require("express-session");
 let router = express.Router();
+
+router.post("/auth/login", (req, res) => {
+  const { username, password } = req.body;
+  const rest = db.Restaurants.findOne({ where: { email: username } });
+
+  if (!rest) {
+    res.status(404).json({ error: "we couldn't find a user with that email." });
+  }
+
+  // ideally you would be using bcrypt to hash/protect your passwords here
+  if (password !== rest.password) {
+    res
+      .status(404)
+      .json({ error: "we couldn't find a user with that email and password." });
+  }
+
+  req.session.rest = rest.id; // add restaraunt data into express-session cookie to be sent to FE
+
+  res.status(200).end();
+});
 
 router.use(function timeLog(req, res, next) {
   console.log("INSIDE API ROUTES");
@@ -12,7 +33,20 @@ router.get("/", (req, res) => {
 });
 //display all the restaurants
 router.get("/restaurants", (req, res) => {
-  db.Restaurant.findAll().then(results => {
+  db.Restaurant.findAll({
+    include: [db.Table]
+  }).then(results => {
+    res.json(results);
+  });
+});
+
+router.get("/restaurants/:id", (req, res) => {
+  db.Restaurant.findOne({
+    where: {
+      id: req.params.id
+    },
+    include: [db.Table]
+  }).then(results => {
     res.json(results);
   });
 });
@@ -107,7 +141,13 @@ router.post("/drinks", (req, res) => {
 
 //get all the tables
 router.get("/tables", (req, res) => {
-  db.Table.findAll().then(results => {
+  // var query = {};
+  // if (req.query.restaurant_id) {
+  //   query.RestaurantId = req.query.restaurant_id;
+  // }
+  db.Table.findAll({
+    include: [db.Restaurant]
+  }).then(results => {
     res.json(results);
   });
 });
@@ -125,10 +165,14 @@ router.get("/tables/:id", function(req, res) {
 
 //add a new table
 router.post("/tables", (req, res) => {
-  db.Table.create({
-    tableNumber: parseInt(req.body.tableNumber),
-    guestQty: req.body.guestQty
-  }).then(results => {
+  db.Table.create(
+    {
+      tableNumber: parseInt(req.body.tableNumber),
+      guestQty: req.body.guestQty,
+      RestaurantId: req.session.rest.id
+    },
+    { include: [db.Restaurant] }
+  ).then(results => {
     res.json(results);
   });
 });

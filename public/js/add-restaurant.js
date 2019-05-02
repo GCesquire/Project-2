@@ -15,16 +15,23 @@ let createNewRestaurant = () => {
 
 let logIntoAccount = () => {
   console.log("logging");
-  $.get("/api/restaurants").then(res => {
-    const email = $("#userEmail").val();
-    const password = $("#userPassword").val();
-    res.forEach(element => {
-      if (element.email === email && element.password === password) {
-        console.log($("#linkToRestaurant"));
-        $("#linkToRestaurant").attr("href", "/tables");
-      }
-    });
+  let restaurantUser = {
+    name: $("#userEmail").val(),
+    password: $("#userPassword").val()
+  };
+  $.post("/api//auth/login", restaurantUser).then(res => {
+    console.log("sucess", res);
   });
+  // $.get("/api/restaurants").then(res => {
+  //   const email = $("#userEmail").val();
+  //   const password = $("#userPassword").val();
+  //   res.forEach(element => {
+  //     if (element.email === email && element.password === password) {
+  //       console.log($("#linkToRestaurant"));
+  //       $("#linkToRestaurant").attr("href", "/tables");
+  //     }
+  //   });
+  // });
 };
 
 $("#create").on("click", createNewRestaurant);
