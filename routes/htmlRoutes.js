@@ -57,7 +57,9 @@ router.get("/add-tables", (req, res) => {
 });
 
 router.get("/tables", (req, res) => {
-  db.Table.findAll({}).then(results => {
+  db.Table.findAll({
+    include: [db.Restaurant]
+  }).then(results => {
     res.render("display-tables", { tables: results });
   });
 });
@@ -68,6 +70,11 @@ router.get("/system", (req, res) => {
 
 router.get("/report", (req, res) => {
   res.render("report", {});
+});
+
+// route for user logout
+router.get("/logout", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/restaurants.html"));
 });
 
 module.exports = router;

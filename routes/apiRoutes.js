@@ -1,26 +1,53 @@
 const express = require("express");
 const db = require("../models/index");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
 let router = express.Router();
 
+router.use(cookieParser());
+
+// initialize express-session to allow us track the logged-in user across sessions.
+router.use(
+  session({
+    key: "rid",
+    secret: "secretSauce",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 600000
+    }
+  })
+);
+
 router.post("/auth/login", (req, res) => {
-  const { username, password } = req.body;
-  const rest = db.Restaurants.findOne({ where: { email: username } });
+  const { email, password } = req.body;
 
-  if (!rest) {
-    res.status(404).json({ error: "we couldn't find a user with that email." });
-  }
+  db.Restaurant.findOne({ where: { email: email } }).then(rest => {
+    // console.log("DEBUG restaurant found", rest);
+    if (!rest) {
+      res
+        .status(404)
+        .json({ error: "we couldn't find a user with that email." });
+    }
+    // ideally you would be using bcrypt to hash/protect your passwords here
 
-  // ideally you would be using bcrypt to hash/protect your passwords here
-  if (password !== rest.password) {
-    res
-      .status(404)
-      .json({ error: "we couldn't find a user with that email and password." });
-  }
+    // console.log("DEBUG client side password", password);
+    // console.log("DEBUG db password", rest.password);
 
-  req.session.rest = rest.id; // add restaraunt data into express-session cookie to be sent to FE
+    if (password !== rest.password) {
+      res.status(404).json({
+        error: "we couldn't find a user with that email and password."
+      });
+    }
 
-  res.status(200).end();
+    req.session.rid = rest.id;
+    req.session.save();
+
+    console.log("DEBUG session", req.session.rid);
+    // req.session.rest = rest.id; // add restaraunt data into express-session cookie to be sent to FE
+    res.json(req.session.rid);
+    // res.redirect(restRoute);
+  });
 });
 
 router.use(function timeLog(req, res, next) {
@@ -35,21 +62,23 @@ router.get("/", (req, res) => {
 router.get("/restaurants", (req, res) => {
   db.Restaurant.findAll({
     include: [db.Table]
+    // include: [db.Table],
+    // include: [db.FoodMenu]
   }).then(results => {
     res.json(results);
   });
 });
 
-router.get("/restaurants/:id", (req, res) => {
-  db.Restaurant.findOne({
-    where: {
-      id: req.params.id
-    },
-    include: [db.Table]
-  }).then(results => {
-    res.json(results);
-  });
-});
+// router.get("/restaurants/:id", (req, res) => {
+//   db.Restaurant.findOne({
+//     where: {
+//       id: req.params.id
+//     },
+//     include: [db.Table]
+//   }).then(results => {
+//     res.json(results);
+//   });
+// });
 //add a new restaurant
 router.post("/restaurants", (req, res) => {
   db.Restaurant.create({
@@ -98,23 +127,26 @@ router.post("/categories", (req, res) => {
 
 //get all the food items
 router.get("/food", (req, res) => {
-  db.FoodMenu.findAll({
-    include: [db.Category]
-  }).then(results => {
+  db.FoodMenu.findAll({}).then(results => {
     res.json(results);
   });
 });
 
 //add a new food item
 router.post("/food", (req, res) => {
-  db.FoodMenu.create({
-    name: req.body.name,
-    wholesalePrice: parseFloat(req.body.wholesalePrice),
-    retailPrice: parseFloat(req.body.retailPrice),
-    stockQty: parseInt(req.body.stockQty),
-    allergies: req.body.allergies,
-    modifications: req.body.modifications
-  }).then(results => {
+  db.FoodMenu.create(
+    {
+      name: req.body.name,
+      wholesalePrice: parseFloat(req.body.wholesalePrice),
+      retailPrice: parseFloat(req.body.retailPrice),
+      stockQty: parseInt(req.body.stockQty),
+      allergies: req.body.allergies,
+      modifications: req.body.modifications
+    }
+    // restaurant_id: req.session.rid
+    // },
+    // { include: [db.Restaurant] }
+  ).then(results => {
     res.json(results);
   });
 });
@@ -141,10 +173,6 @@ router.post("/drinks", (req, res) => {
 
 //get all the tables
 router.get("/tables", (req, res) => {
-  // var query = {};
-  // if (req.query.restaurant_id) {
-  //   query.RestaurantId = req.query.restaurant_id;
-  // }
   db.Table.findAll({
     include: [db.Restaurant]
   }).then(results => {
@@ -152,16 +180,16 @@ router.get("/tables", (req, res) => {
   });
 });
 
-router.get("/tables/:id", function(req, res) {
-  db.Table.findOne({
-    where: {
-      id: req.params.id
-    },
-    include: [db.Table]
-  }).then(results => {
-    res.json(results);
-  });
-});
+// router.get("/tables/:id", function(req, res) {
+//   db.Table.findOne({
+//     where: {
+//       id: req.params.id
+//     },
+//     include: [db.Restaurant]
+//   }).then(results => {
+//     res.json(results);
+//   });
+// });
 
 //add a new table
 router.post("/tables", (req, res) => {
@@ -169,7 +197,7 @@ router.post("/tables", (req, res) => {
     {
       tableNumber: parseInt(req.body.tableNumber),
       guestQty: req.body.guestQty,
-      RestaurantId: req.session.rest.id
+      RestaurantId: req.session.rid
     },
     { include: [db.Restaurant] }
   ).then(results => {

@@ -6,9 +6,9 @@ module.exports = (sequelize, DataTypes) => {
   Category.associate = models => {
     // Associating Category with Food/Drink items
     // When Category is deleted, also delete any associated food items
-    Category.hasMany(models.FoodMenu, {
-      onDelete: "cascade"
-    });
+    // Category.hasMany(models.FoodMenu, {
+    //   onDelete: "cascade"
+    // });
     Category.hasMany(models.DrinkMenu, {
       onDelete: "cascade"
     });

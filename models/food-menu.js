@@ -8,15 +8,14 @@ module.exports = (sequelize, DataTypes) => {
     modifications: DataTypes.STRING
   });
 
-  FoodMenu.associate = models => {
-    // Food item from FoodMenu should belong to a certain Category
-    // A food item can't be created without a Category due to the foreign key constraint
-    FoodMenu.belongsTo(models.Category, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
-  };
+  // FoodMenu.associate = models => {
+  //   // Table.hasMany(models.Order, {
+  //   //   onDelete: "cascade"
+  //   // });
+  //   FoodMenu.belongsTo(models.Restaurant, {
+  //     foreignKey: "restaurant_id"
+  //   });
+  // };
 
   return FoodMenu;
 };
