@@ -5,8 +5,11 @@ $(".tables").on("click", event => {
   tableId = {
     table: event.target.getAttribute("value")
   };
-  $("#tableID").attr("value", tableId.table);
-  console.log("clicked", tableId);
+
+  let url = "api/orders/" + tableId.table;
+  $.post(url, tableId).then(res => {
+    console.log(res);
+  });
 });
 
 let displayButtons = () => {
@@ -29,16 +32,21 @@ let displayButtons = () => {
 
 let addToOrder = () => {
   $(".menu-item").on("click", event => {
-    console.log("clicked, ", event.target.getAttribute("title"));
-    let addToOrder = {
-      item: event.target.getAttribute("title"),
-      itemQty: 1,
-      price: 12
-    };
-    let url = "/api/orders/" + tableId.table;
-    console.log("url", url);
-    $.post(url, addToOrder).then(result => {
-      console.log("success", result);
+    $.get("/api/menu").then(res => {
+      res.forEach(element => {
+        if (event.target.getAttribute("value") === element.value) {
+          let url = "/api/orders/" + tableId.table;
+          console.log("url add to order", url);
+          let addToOrder = {
+            item: element.name,
+            itemQty: 1,
+            price: element.price
+          };
+          $.post(url, addToOrder).then(result => {
+            console.log("success", result);
+          });
+        }
+      });
     });
   });
 };

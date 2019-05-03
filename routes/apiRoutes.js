@@ -54,22 +54,20 @@ router.get("/", (req, res) => {
 //display all the restaurants
 router.get("/restaurants", (req, res) => {
   db.Restaurant.findAll({
-    include: [db.Table]
+    include: [
+      {
+        model: db.Table,
+        include: [
+          {
+            model: db.Order
+          }
+        ]
+      }
+    ]
   }).then(results => {
     res.json(results);
   });
 });
-
-// router.get("/restaurants/:id", (req, res) => {
-//   db.Restaurant.findOne({
-//     where: {
-//       id: req.params.id
-//     },
-//     include: [db.Table]
-//   }).then(results => {
-//     res.json(results);
-//   });
-// });
 
 //add a new restaurant
 router.post("/restaurants", (req, res) => {
@@ -86,22 +84,15 @@ router.post("/restaurants", (req, res) => {
 //get all the tables
 router.get("/tables", (req, res) => {
   db.Table.findAll({
-    include: [db.Restaurant]
+    include: [
+      {
+        model: db.Order
+      }
+    ]
   }).then(results => {
     res.json(results);
   });
 });
-
-// router.get("/tables/:id", function(req, res) {
-//   db.Table.findOne({
-//     where: {
-//       id: req.params.id
-//     },
-//     include: [db.Restaurant]
-//   }).then(results => {
-//     res.json(results);
-//   });
-// });
 
 //add a new table
 router.post("/tables", (req, res) => {
@@ -128,11 +119,25 @@ router.get("/menu", (req, res) => {
 });
 
 router.get("/order/:table", (req, res) => {
-  db.Order.findAll({
-    where: {
-      table: req.params.table
+  db.Order.findAll(
+    {
+      where: {
+        table: req.params.table
+      }
     }
-  }).then(results => {
+    // {
+    //   include: [
+    //     {
+    //       model: db.Restaurant,
+    //       include: [
+    //         {
+    //           model: db.Table
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // }
+  ).then(results => {
     res.json(results);
   });
 });
@@ -169,13 +174,18 @@ router.get("/orders/:tableId", (req, res) => {
 });
 
 //update an order
-router.post("/orders/:tableId", (req, res) => {
-  db.Order.create({
-    item: req.body.item,
-    itemQty: parseInt(req.body.itemQty),
-    price: parseFloat(req.body.price),
-    table: parseInt(req.params.table)
-  }).then(results => {
+router.post("/orders/:id", (req, res) => {
+  db.Order.create(
+    {
+      item: req.body.item,
+      itemQty: parseInt(req.body.itemQty),
+      price: parseFloat(req.body.price),
+      TableId: parseInt(req.params.id)
+    },
+    {
+      include: [db.Table]
+    }
+  ).then(results => {
     res.json(results);
   });
 });

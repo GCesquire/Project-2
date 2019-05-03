@@ -5,13 +5,13 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Table.associate = models => {
-    // Table.hasMany(models.Order, {
-    //   onDelete: "cascade"
-    // });
     Table.belongsTo(models.Restaurant, {
       foreignKey: {
         allowNull: false
       }
+    });
+    Table.hasMany(models.Order, {
+      onDelete: "cascade"
     });
   };
 
