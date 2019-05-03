@@ -1,5 +1,8 @@
 body {
     text-align: center;
+    background-color: #000;
+    color: white;
+    font-family: 'Gruppo', cursive;
 }
 
 .flex-wrap {
@@ -20,13 +23,13 @@ body {
 .table-list {
     height: 70vh;
     overflow: hidden;
-    background: #ece8e8;
+    background: dimgray;
 }
 
 .menu-list {
     height: 70vh;
     overflow: hidden;
-    background: #cbf43b;
+    background: darkgray;
 }
 
 .right-price {
@@ -100,4 +103,16 @@ body {
 .in-progress:hover {
     background: #d4020d;
     border: 1px solid #d4020d;
+}
+
+.modal-content, .modal-header, .modal-title center {
+    background-color: #000;
+}
+
+#loginLabel, #linkToRestaurant {
+    background-color: #000;
+}
+
+#navbarTogglerDemo03{
+    font-size: 20px;
 }
