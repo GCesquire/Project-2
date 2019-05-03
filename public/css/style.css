@@ -73,7 +73,7 @@ body {
 }
 
 .middle-screen {
-    margin-top: 150px;
+    margin-top: 60px;
 }
 
 .big-btns {
@@ -90,4 +90,14 @@ body {
 
 #guest-note {
     width: 100%;
+}
+
+.in-progress {
+    background: #6e7180;
+    border: 1px solid #6e7180;
+}
+
+.in-progress:hover {
+    background: #d4020d;
+    border: 1px solid #d4020d;
 }

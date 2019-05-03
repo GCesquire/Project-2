@@ -12,6 +12,14 @@ router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/restaurants.html"));
 });
 
+router.get("/add-menu", (req, res) => {
+  res.render("add-menu");
+});
+
+router.get("/menu", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/menu.html"));
+});
+
 router.get("/categories", (req, res) => {
   db.Category.findAll({}).then(results => {
     res.render("display-categories", { categories: results });

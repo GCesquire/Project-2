@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "watch": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed_db": "mysql -u root < db/schema.sql"
   },
   "repository": {
     "type": "git",

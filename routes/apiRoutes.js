@@ -23,16 +23,11 @@ router.post("/auth/login", (req, res) => {
   const { email, password } = req.body;
 
   db.Restaurant.findOne({ where: { email: email } }).then(rest => {
-    // console.log("DEBUG restaurant found", rest);
     if (!rest) {
       res
         .status(404)
         .json({ error: "we couldn't find a user with that email." });
     }
-    // ideally you would be using bcrypt to hash/protect your passwords here
-
-    // console.log("DEBUG client side password", password);
-    // console.log("DEBUG db password", rest.password);
 
     if (password !== rest.password) {
       res.status(404).json({
@@ -44,9 +39,7 @@ router.post("/auth/login", (req, res) => {
     req.session.save();
 
     console.log("DEBUG session", req.session.rid);
-    // req.session.rest = rest.id; // add restaraunt data into express-session cookie to be sent to FE
     res.json(req.session.rid);
-    // res.redirect(restRoute);
   });
 });
 
@@ -62,8 +55,6 @@ router.get("/", (req, res) => {
 router.get("/restaurants", (req, res) => {
   db.Restaurant.findAll({
     include: [db.Table]
-    // include: [db.Table],
-    // include: [db.FoodMenu]
   }).then(results => {
     res.json(results);
   });
@@ -79,6 +70,7 @@ router.get("/restaurants", (req, res) => {
 //     res.json(results);
 //   });
 // });
+
 //add a new restaurant
 router.post("/restaurants", (req, res) => {
   db.Restaurant.create({
@@ -86,6 +78,88 @@ router.post("/restaurants", (req, res) => {
     address: req.body.address,
     email: req.body.email,
     password: req.body.password
+  }).then(results => {
+    res.json(results);
+  });
+});
+
+//get all the tables
+router.get("/tables", (req, res) => {
+  db.Table.findAll({
+    include: [db.Restaurant]
+  }).then(results => {
+    res.json(results);
+  });
+});
+
+// router.get("/tables/:id", function(req, res) {
+//   db.Table.findOne({
+//     where: {
+//       id: req.params.id
+//     },
+//     include: [db.Restaurant]
+//   }).then(results => {
+//     res.json(results);
+//   });
+// });
+
+//add a new table
+router.post("/tables", (req, res) => {
+  db.Table.create(
+    {
+      tableNumber: parseInt(req.body.tableNumber),
+      guestQty: req.body.guestQty,
+      RestaurantId: req.session.rid
+    },
+    { include: [db.Restaurant] }
+  ).then(results => {
+    res.json(results);
+  });
+});
+
+router.get("/menu", (req, res) => {
+  db.Menu.findAll({
+    where: {
+      restaurantId: req.session.rid
+    }
+  }).then(results => {
+    res.json(results);
+  });
+});
+
+router.post("/menu", (req, res) => {
+  console.log("REQUEST.SESSION, ", req.session.rid);
+  db.Menu.create({
+    name: req.body.name,
+    wholesalePrice: req.body.wholesalePrice,
+    retailPrice: req.body.retailPrice,
+    stockQty: req.body.stockQty,
+    restaurantId: req.session.rid
+  }).then(results => {
+    res.json(results);
+  });
+});
+
+//display all orders
+router.get("/orders", (req, res) => {
+  const query = {};
+  if (req.query.table_id) {
+    query.TableId = req.query.table_id;
+  }
+  db.Order.findAll({
+    where: query,
+    include: [db.Table]
+  }).then(results => {
+    res.json(results);
+  });
+});
+
+//add a new order
+router.post("/orders", (req, res) => {
+  db.Order.create({
+    item: req.body.item,
+    itemQty: parseInt(req.body.itemQty),
+    price: parseFloat(req.body.price)
   }).then(results => {
     res.json(results);
   });
@@ -166,65 +240,6 @@ router.post("/drinks", (req, res) => {
     name: req.body.name,
     wholesalePrice: parseFloat(req.body.wholesalePrice),
     retailPrice: parseFloat(req.body.retailPrice)
-  }).then(results => {
-    res.json(results);
-  });
-});
-
-//get all the tables
-router.get("/tables", (req, res) => {
-  db.Table.findAll({
-    include: [db.Restaurant]
-  }).then(results => {
-    res.json(results);
-  });
-});
-
-// router.get("/tables/:id", function(req, res) {
-//   db.Table.findOne({
-//     where: {
-//       id: req.params.id
-//     },
-//     include: [db.Restaurant]
-//   }).then(results => {
-//     res.json(results);
-//   });
-// });
-
-//add a new table
-router.post("/tables", (req, res) => {
-  db.Table.create(
-    {
-      tableNumber: parseInt(req.body.tableNumber),
-      guestQty: req.body.guestQty,
-      RestaurantId: req.session.rid
-    },
-    { include: [db.Restaurant] }
-  ).then(results => {
-    res.json(results);
-  });
-});
-
-//display all orders
-router.get("/orders", (req, res) => {
-  const query = {};
-  if (req.query.table_id) {
-    query.TableId = req.query.table_id;
-  }
-  db.Order.findAll({
-    where: query,
-    include: [db.Table]
-  }).then(results => {
-    res.json(results);
-  });
-});
-
-//add a new order
-router.post("/orders", (req, res) => {
-  db.Order.create({
-    item: req.body.item,
-    itemQty: parseInt(req.body.itemQty),
-    price: parseFloat(req.body.price)
   }).then(results => {
     res.json(results);
   });

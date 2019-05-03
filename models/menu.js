@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     wholesalePrice: DataTypes.FLOAT,
     retailPrice: DataTypes.FLOAT,
-    stockQty: DataTypes.INTEGER
+    stockQty: DataTypes.INTEGER,
+    restaurantId: DataTypes.INTEGER
   });
   return Menu;
 };
