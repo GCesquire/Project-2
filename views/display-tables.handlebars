@@ -3,9 +3,9 @@
 <div class="flex-wrap">
     {{#each tables }}
 
-    <a href="/food-menu" class="tables" data-toggle="modal" data-target="#table">
+    <a href="/menu" class="tables" id={{id}}>
         <div>
-            <p value="{{tableNumber}}" class="table">{{tableNumber}}</p>
+            <p value="{{id}}" class="table">{{tableNumber}}</p>
         </div>
     </a>
 
@@ -13,7 +13,7 @@
 
 </div>
 <!-- Modal -->
-<div class="modal fade" id="table" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{!-- <div class="modal fade" id="table" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -78,7 +78,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!--jQuery-->
 <script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="

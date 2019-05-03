@@ -14,7 +14,7 @@ router.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 600000
+      expires: 6000000
     }
   })
 );
@@ -127,6 +127,16 @@ router.get("/menu", (req, res) => {
   });
 });
 
+router.get("/order/:table", (req, res) => {
+  db.Order.findAll({
+    where: {
+      table: req.params.table
+    }
+  }).then(results => {
+    res.json(results);
+  });
+});
+
 router.post("/menu", (req, res) => {
   console.log("REQUEST.SESSION, ", req.session.rid);
   db.Menu.create({
@@ -142,24 +152,29 @@ router.post("/menu", (req, res) => {
 
 //display all orders
 router.get("/orders", (req, res) => {
-  const query = {};
-  if (req.query.table_id) {
-    query.TableId = req.query.table_id;
-  }
+  db.Order.findAll({}).then(results => {
+    res.json(results);
+  });
+});
+
+//display all orders
+router.get("/orders/:tableId", (req, res) => {
   db.Order.findAll({
-    where: query,
-    include: [db.Table]
+    where: {
+      table: req.params.tableId
+    }
   }).then(results => {
     res.json(results);
   });
 });
 
-//add a new order
-router.post("/orders", (req, res) => {
+//update an order
+router.post("/orders/:tableId", (req, res) => {
   db.Order.create({
     item: req.body.item,
     itemQty: parseInt(req.body.itemQty),
-    price: parseFloat(req.body.price)
+    price: parseFloat(req.body.price),
+    table: parseInt(req.params.table)
   }).then(results => {
     res.json(results);
   });
