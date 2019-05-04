@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "watch": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed_db": "mysql -u root < db/schema.sql"
   },
   "repository": {
     "type": "git",
@@ -22,8 +23,13 @@
   },
   "homepage": "https://github.com/GCesquire/Project-2#readme",
   "dependencies": {
+
+    "cookie-parser": "^1.4.4",
+
     "express": "^4.16.4",
+
     "express-handlebars": "^3.0.2",
+    "express-session": "^1.16.1",
     "handlebars": "^4.1.2",
     "mysql": "^2.17.1",
     "mysql2": "^1.6.5",

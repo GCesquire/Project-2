@@ -2,10 +2,18 @@ body {
     text-align: center;
 }
 
+.hide {
+    display: none;
+}
+
 .flex-wrap {
     display: flex;
     flex-wrap: wrap;
     align-content: space-around;
+}
+
+.unclickable {
+    cursor: not-allowed;
 }
 
 .allergies {
@@ -21,6 +29,7 @@ body {
     height: 70vh;
     overflow: hidden;
     background: #ece8e8;
+    overflow-y: scroll;
 }
 
 .menu-list {
@@ -73,7 +82,7 @@ body {
 }
 
 .middle-screen {
-    margin-top: 150px;
+    margin-top: 60px;
 }
 
 .big-btns {
@@ -90,4 +99,14 @@ body {
 
 #guest-note {
     width: 100%;
+}
+
+.in-progress {
+    background: #6e7180;
+    border: 1px solid #6e7180;
+}
+
+.in-progress:hover {
+    background: #d4020d;
+    border: 1px solid #d4020d;
 }

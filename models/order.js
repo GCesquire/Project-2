@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   Order.associate = models => {
     Order.belongsTo(models.Table, {
       foreignKey: {
-        allowNull: true
+        allowNull: false
       }
     });
   };

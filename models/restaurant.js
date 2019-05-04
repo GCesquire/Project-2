@@ -6,9 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING
   });
   Restaurant.associate = models => {
-    // Associating Restaurant with employees
-    // When Restaurant is deleted, also delete any associated workers
-    Restaurant.hasMany(models.Waiter, {
+    Restaurant.hasMany(models.Table, {
       onDelete: "cascade"
     });
   };

@@ -1,19 +1,53 @@
-<h2>Floor plan</h2>
+<div id="allTables">
+    <h2>Floor plan</h2>
+    <div class="flex-wrap">
 
-<div class="flex-wrap">
-    {{#each tables }}
+        {{#each tables }}
 
-    <a href="/food-menu" class="tables" data-toggle="modal" data-target="#table">
-        <div>
-            <p value="{{tableNumber}}" class="table">{{tableNumber}}</p>
+        <div class="tables" value="{{id}}" id={{id}}>
+            <div>
+                <p class="unclickable">{{tableNumber}}</p>
+            </div>
         </div>
-    </a>
 
-    {{/each}}
+        {{/each}}
+    </div>
+</div>
+<!--MENU-->
+<div class="hide food-menu" id="menu">
+    <div class="container ">
+        <h1>Menu</h1>
+        <div class="row">
+            <div class="col-lg-6 table-list">
+                <span value="" id="tableID"></span>
+                <!--Generated Ordered Items-->
+                <div id="result" class="left"></div>
+            </div>
+            <!--Generated Menu Items-->
+            <div class="col-lg-6 menu-list" id="resultDiv"></div>
+        </div>
+        <div class="row left">
+            <div class="col-lg-8">
+                <p>Subtotal: $<span id="total"></span></p>
+                <p>Tax: $<span id="tax"></span></p>
+                <h6>Final amount: $<span id="totalAmount"></span></h6>
+            </div>
+            <div class="col-lg-4">
+                <div class="top-margin right">
+                    <button class="btn btn-info" id="send">Send Order</button>
+                </div>
+                <div class="top-margin right">
+                    <a href="/tables">
+                        <button class="btn btn-info" id="pay">Pay</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <!-- Modal -->
-<div class="modal fade" id="table" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{!-- <div class="modal fade" id="table" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -73,16 +107,22 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <a href="/categories"><button type="button" class="btn btn-info">Enter</button></a>
+
+                <a href="/menu"><button type="button" class="btn btn-info" id="openTable">Enter</button></a>
+
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!--jQuery-->
 <script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
     crossorigin="anonymous"></script>
 
-<!--JavaScript-->
+
+<!-- JavaScript-->
+
 <script src="./js/order.js"></script>
+<script src="./js/display-table.js"></script>
+

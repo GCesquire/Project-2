@@ -1,5 +1,3 @@
-let priceArr = []; //to store all the prices;
-let expencesArr = []; //to store all the wholesale prices;
 let tax = 0.08875;
 let price = 0,
   wholesale = 0,
@@ -18,19 +16,28 @@ $(".drink-item").on("click", event => {
   clickConter++;
   console.log("Clicked", clickConter);
   $.get("/api/drinks").then(res => {
-    console.log(res);
     res.forEach(element => {
       if (selected === element.name) {
         let drinkParagraph = $("<p>").text(element.name);
         drinkParagraph.attr("class", "item");
-        drinkParagraph.attr("value", element.name);
+
         let priceParagraph = $("<span>").text(`$${element.retailPrice}.00`);
         priceParagraph.attr("class", "right-price");
-        priceParagraph.attr("value", element.retailPrice);
+
         drinkParagraph.append(priceParagraph);
         $("#result").append(drinkParagraph);
         price += element.retailPrice;
         wholesale += element.wholesalePrice;
+        console.log("price ", price);
+        let newOrder = {
+          item: element.name,
+          itemQty: 1,
+          price: element.retailPrice
+        };
+        console.log("NEW ORDER", newOrder);
+        $.post("/api/orders", newOrder).then(respone => {
+          console.log("response successfully ", res);
+        });
       }
     });
     taxAmount = price * tax; //total tax
