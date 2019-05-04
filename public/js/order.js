@@ -1,3 +1,4 @@
+
 let tax = 0.08875;
 let price = 0,
   wholesale = 0,
@@ -19,6 +20,21 @@ let displayOrder = () => {
       p.append(span);
       $("#result").append(p);
       price += element.price;
+
+$("#pay").on("click", addToOrder);
+
+let addToOrder = () => {
+  let length = $(".item").lenght;
+  console.log("Length ", length);
+  for (let i = 0; i < length; i++) {
+    let newOrder = {
+      item: $(".item").val(),
+      itemQty: 1,
+      price: $(".right-price").val()
+    };
+    $.post("/api/orders", newOrder).then(res => {
+      console.log("Succes ", res);
+
     });
     taxAmount = price * tax; //total tax
     total = price + taxAmount; //Final amount

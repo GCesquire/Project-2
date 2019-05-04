@@ -1,3 +1,4 @@
+
 <div class='center'>
     <form>
         <lable>
@@ -11,9 +12,50 @@
 <a href="/api/categories">CATEGORIES API</a>
 
 
+
+<h1>Add Categories</h1>
+
+<form action="/action_page.php">
+    <label><h2>Choose A Category:</h2></label>
+    <div>
+        <select>
+            <option></option>
+            {{#each Category}}
+            <option> {{name}} </option>
+            {{/each}}
+        </select>
+    </div>
+    <label><h2>Enter The Name of the drink:</h2></label>
+    <div>
+        <input type="text" placeholder="Name Of Drink" id="name">
+    </div>
+    <label><h2>Enter The Whoelsale Price:</h2></label>
+    <div>
+        <input type="text" placeholder="Wholesale Price" id="wholesalePrice">
+    </div>
+    <label><h2>Enter The Retail Price:</h2></label>
+    <div>
+        <input type="text" placeholder="Retail Price" id="retailPrice">
+    </div>
+</form>
+	<button class="btn btn-info" data-id="{{id}}" data-driinks="{{drinks}}">some btn</button>
+</div>
+
+<a href="/categories"><button type="submit" class="btn btn-info" id="add">Add And Continue</button></a>
+<a href="/drink-menu"><button type="submit" class="btn btn-info" id="submit">Finish</button></a>
+
+<a href="/api/categories">Categories API</a>
+
+
+
+
 <!--jQuery-->
 <script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
     crossorigin="anonymous"></script>
 
 <!--JavaScript-->
+
 <script src="./js/add-category.js"></script>
+
+<script src="./js/add-drinks.js"></script>
+
