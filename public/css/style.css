@@ -2,10 +2,18 @@ body {
     text-align: center;
 }
 
+.hide {
+    display: none;
+}
+
 .flex-wrap {
     display: flex;
     flex-wrap: wrap;
     align-content: space-around;
+}
+
+.unclickable {
+    cursor: not-allowed;
 }
 
 .allergies {
@@ -21,6 +29,7 @@ body {
     height: 70vh;
     overflow: hidden;
     background: #ece8e8;
+    overflow-y: scroll;
 }
 
 .menu-list {

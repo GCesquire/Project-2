@@ -18,7 +18,14 @@ router.get("/add-menu", (req, res) => {
   res.render("add-menu");
 });
 
-router.get("/menu", (req, res) => {
+router.get("/order", (req, res) => {
+  // db.Order.findAll({
+  //   where: {
+  //     TableId: req.params.id
+  //   }
+  // }).then(results => {
+  //   res.render("display-order", { orderedItems: results });
+  // });
   res.sendFile(path.join(__dirname, "../public/menu.html"));
 });
 
@@ -99,7 +106,13 @@ router.get("/system", (req, res) => {
 });
 
 router.get("/report", (req, res) => {
-  res.render("report", {});
+  db.Sale.findAll({
+    where: {
+      restaurantID: req.session.rid
+    }
+  }).then(results => {
+    res.render("report", { reports: results });
+  });
 });
 
 // route for user logout

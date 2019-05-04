@@ -1,5 +1,3 @@
-let priceArr = []; //to store all the prices;
-let expencesArr = []; //to store all the wholesale prices;
 let tax = 0.08875;
 let price = 0,
   wholesale = 0,
@@ -30,6 +28,7 @@ $(".drink-item").on("click", event => {
         $("#result").append(drinkParagraph);
         price += element.retailPrice;
         wholesale += element.wholesalePrice;
+        console.log("price ", price);
         let newOrder = {
           item: element.name,
           itemQty: 1,

@@ -1,19 +1,14 @@
-console.log("display table");
-let tableId = {};
+let tableId;
 
 $(".tables").on("click", event => {
-  tableId = {
-    table: event.target.getAttribute("value")
-  };
+  tableId = event.target.getAttribute("value");
 
-  let url = "api/orders/" + tableId.table;
-  $.post(url, tableId).then(res => {
-    console.log(res);
-  });
+  $("#allTables").attr("class", "hide");
+  $("#menu").removeAttr("class", "hide");
 });
 
 let displayButtons = () => {
-  console.log("displaying buttons");
+  displayOrder();
   $.get("/api/menu").then(res => {
     res.forEach(element => {
       if (!element.restaurantId) {
@@ -25,46 +20,70 @@ let displayButtons = () => {
       button.attr("value", element.id);
       button.text(element.name);
       $("#resultDiv").append(button);
-      addToOrder();
     });
+    addToOrder();
   });
 };
 
 let addToOrder = () => {
   $(".menu-item").on("click", event => {
-    $.get("/api/menu").then(res => {
+    let selected = event.target.getAttribute("value");
+
+    $.get("api/menu").then(res => {
       res.forEach(element => {
-        if (event.target.getAttribute("value") === element.value) {
-          let url = "/api/orders/" + tableId.table;
-          console.log("url add to order", url);
+        if (element.id === parseInt(selected)) {
+          console.log("yay");
           let addToOrder = {
             item: element.name,
             itemQty: 1,
-            price: element.price
+            price: element.retailPrice,
+            TableId: tableId
           };
-          $.post(url, addToOrder).then(result => {
-            console.log("success", result);
+          price += element.retailPrice;
+          console.log("Adding to order price status ", price);
+          wholesale += element.wholesalePrice;
+          let item = $("<p>").text(element.name);
+          item.attr("class", "item");
+
+          let retailPrice = $("<span>").text(`$${element.retailPrice}.00`);
+          retailPrice.attr("class", "right-price");
+
+          item.append(retailPrice);
+          $("#result").append(item);
+
+          console.log("add to order ", addToOrder);
+          $.post("/api/orders", addToOrder).then(response => {
+            console.log("successfully", response);
           });
         }
       });
+      taxAmount = price * tax; //total tax
+      total = price + taxAmount; //Final amount
+
+      $("#total").html(price);
+      $("#tax").html(taxAmount.toFixed(2));
+      $("#totalAmount").html(total.toFixed(2));
     });
   });
 };
 
-let displayOrder = () => {
-  let url = "/api/orders/" + tableId.table;
-  console.log("order url ", url);
-  $.get(url).then(res => {
-    res.forEach(element => {
-      console.log("response ", res);
-      let p = $("<p>").attr("class", "left");
-      p.text(element.item);
-      $("#result").append(p);
+let addToReport = () => {
+  $("#pay").on("click", () => {
+    let newSale = {
+      expenses: wholesale,
+      sales: total
+    };
+    $.post("/api/sales", newSale).then(res => {
+      console.log("seccess ", res);
+    });
+    $.ajax({
+      url: "/api/orders/" + tableId,
+      type: "DELETE",
+      success: result => {
+        console.log("deleted order");
+      }
     });
   });
 };
-
 displayButtons();
-displayOrder();
-
-console.log("displaying");
+addToReport();

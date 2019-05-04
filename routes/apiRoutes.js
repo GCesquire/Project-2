@@ -118,32 +118,7 @@ router.get("/menu", (req, res) => {
   });
 });
 
-router.get("/order/:table", (req, res) => {
-  db.Order.findAll(
-    {
-      where: {
-        table: req.params.table
-      }
-    }
-    // {
-    //   include: [
-    //     {
-    //       model: db.Restaurant,
-    //       include: [
-    //         {
-    //           model: db.Table
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // }
-  ).then(results => {
-    res.json(results);
-  });
-});
-
 router.post("/menu", (req, res) => {
-  console.log("REQUEST.SESSION, ", req.session.rid);
   db.Menu.create({
     name: req.body.name,
     wholesalePrice: req.body.wholesalePrice,
@@ -166,7 +141,7 @@ router.get("/orders", (req, res) => {
 router.get("/orders/:tableId", (req, res) => {
   db.Order.findAll({
     where: {
-      table: req.params.tableId
+      TableId: req.params.tableId
     }
   }).then(results => {
     res.json(results);
@@ -174,18 +149,28 @@ router.get("/orders/:tableId", (req, res) => {
 });
 
 //update an order
-router.post("/orders/:id", (req, res) => {
+router.post("/orders", (req, res) => {
   db.Order.create(
     {
       item: req.body.item,
       itemQty: parseInt(req.body.itemQty),
       price: parseFloat(req.body.price),
-      TableId: parseInt(req.params.id)
+      TableId: parseInt(req.body.TableId)
     },
     {
       include: [db.Table]
     }
   ).then(results => {
+    res.json(results);
+  });
+});
+
+router.delete("/orders/:id", (req, res) => {
+  db.Order.destroy({
+    where: {
+      TableId: req.params.id
+    }
+  }).then(results => {
     res.json(results);
   });
 });
@@ -265,6 +250,26 @@ router.post("/drinks", (req, res) => {
     name: req.body.name,
     wholesalePrice: parseFloat(req.body.wholesalePrice),
     retailPrice: parseFloat(req.body.retailPrice)
+  }).then(results => {
+    res.json(results);
+  });
+});
+
+router.get("/sales", (req, res) => {
+  db.Sale.findAll({
+    where: {
+      restaurantID: req.session.rid
+    }
+  }).then(results => {
+    res.json(results);
+  });
+});
+
+router.post("/sales", (req, res) => {
+  db.Sale.create({
+    expenses: req.body.expenses,
+    sales: req.body.sales,
+    restaurantID: req.session.rid
   }).then(results => {
     res.json(results);
   });
